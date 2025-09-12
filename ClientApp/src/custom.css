@@ -1,0 +1,149 @@
+main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+p {
+    margin: 0px;
+}
+
+a {
+    color: #0366d6;
+}
+
+code {
+    color: #E01A76;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.items-not-ranked {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.unranked-cell {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.unranked-cell img {
+    width: 100%;
+    height: 100px;
+    object-fit: fill;
+}
+
+.rankings {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+/* Changed to match component className */
+.rank-row {
+    height: 200px;
+    display: flex;
+    justify-content: space-around;
+    border: 2.5px solid grey;
+    background-color: rgb(35, 35, 32);
+}
+
+/* Changed from .row-cell to .rank-cell */
+.rank-cell {
+    width: 120px; /* Matches component width */
+    height: 200px; /* Matches component height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Added for tier labels */
+.row-label {
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Updated tier selectors to target .rank-cell */
+.top-tier .row-label {
+    background-color: #FFD700;
+    color: #000;
+}
+
+.middle-tier .row-label {
+    background-color: #87CEEB;
+    color: #000;
+}
+
+.bottom-tier .row-label {
+    background-color: #90EE90;
+    color: #000;
+}
+
+.worst-tier .row-label {
+    background-color: #FF4500;
+    color: #000;
+}
+
+/* Image adjustments */
+.rank-cell img {
+    width: 100%;
+    height: 100px; /* Matches component image height */
+    object-fit: contain;
+}
+
+/* Keep existing button styles below */
+.reload {
+    align-items: center;
+    appearance: none;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: .375em;
+    box-shadow: none;
+    box-sizing: border-box;
+    color: #363636;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 1rem;
+    height: 2.5em;
+    justify-content: center;
+    line-height: 1.5;
+    padding: calc(.5em - 1px) 1em;
+    position: relative;
+    text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.reload:active {
+    border-color: #4a4a4a;
+    outline: 0;
+}
+
+.reload:focus {
+    border-color: #485fc7;
+    outline: 0;
+}
+
+.reload:hover {
+    border-color: #b5b5b5;
+}
+
+.reload:focus:not(:active) {
+box-shadow: rgba(72, 95, 199, .25) 0 0 0 .125em;
+}
