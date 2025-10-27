@@ -1,5 +1,4 @@
-﻿const RankingGrid = ({ items, imgArr, drag, allowDrop, drop }) => {
-
+﻿const RankingGrid = ({ items = [], imgArr, drag, allowDrop, drop }) => {
     const rankingGrid = [];
     const cellCollectionTop = [];
     const cellCollectionMiddle = [];
@@ -8,16 +7,26 @@
 
     function pushCellMarkupToArr(cellCollection, rankNum, rowLabel) {
         if (rankNum > 0) {
-            var item = items.find(o => o.ranking === rankNum);
-            cellCollection.push(<div id={`rank-${rankNum}`} onDrop={drop} onDragOver={allowDrop} className="rank-cell">
-                {(item != null) ? <img id={`item-${item.id}`} src={imgArr.find(o => o.id === item.imageId)?.image} draggable="true" onDragStart={drag} />
-                    : null}
-            </div>);
-        }
-        else {
-            cellCollection.push(<div className="row-label">
-                <h4>{rowLabel}</h4>
-            </div>);
+            const item = Array.isArray(items) ? items.find(o => o.ranking === rankNum) : null;
+            cellCollection.push(
+                <div id={`rank-${rankNum}`} onDrop={drop} onDragOver={allowDrop} className="rank-cell">
+                    {item ? (
+                        <img 
+                            id={`item-${item.id}`} 
+                            src={`http://localhost/api/uploads/${item.image_path}`}
+                            draggable="true" 
+                            onDragStart={drag}
+                            alt={item.title}
+                        />
+                    ) : null}
+                </div>
+            );
+        } else {
+            cellCollection.push(
+                <div className="row-label">
+                    <h4>{rowLabel}</h4>
+                </div>
+            );
         }
     }
 
@@ -47,9 +56,7 @@
                 label = "Worst Tier";
             }
             pushCellMarkupToArr(currCollection, rankNum, label);
-
         }
-
     }
 
     function createCellsForRows() {
@@ -60,12 +67,10 @@
     }
 
     function createRowsForGrid() {
-
         rankingGrid.push(<div className="rank-row top-tier">{cellCollectionTop}</div>);
         rankingGrid.push(<div className="rank-row middle-tier">{cellCollectionMiddle}</div>);
         rankingGrid.push(<div className="rank-row bottom-tier">{cellCollectionBottom}</div>);
         rankingGrid.push(<div className="rank-row worst-tier">{cellCollectionWorst}</div>);
-
         return rankingGrid;
     }
 
@@ -78,8 +83,7 @@
         <div className="rankings">
             {createRankingGrid()}
         </div>
-
     )
-
 }
+
 export default RankingGrid;

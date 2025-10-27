@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import RankingGrid from "./RankingGrid";
 import ItemCollection from "./ItemCollection";
 
-const RankItems = ({ items, setItems, dataType, imgArr, localStorageKey }) => {
+const API_BASE_URL = "/api/item"; // Use proxy to .NET which will forward to PHP
 
+const RankItems = ({ items, setItems, dataType, imgArr, localStorageKey, tierListId }) => {
     const [reload, setReload] = useState(false);
 
     function Reload() {
@@ -19,7 +20,6 @@ const RankItems = ({ items, setItems, dataType, imgArr, localStorageKey }) => {
     }
 
     function drop(ev) {
-
         ev.preventDefault();
         const targetElm = ev.target;
         if (targetElm.nodeName === "IMG") {
@@ -30,25 +30,43 @@ const RankItems = ({ items, setItems, dataType, imgArr, localStorageKey }) => {
             const transformedCollection = items.map((item) => (item.id === parseInt(data)) ?
                 { ...item, ranking: parseInt(targetElm.id.substring(5)) } : { ...item, ranking: item.ranking });
             setItems(transformedCollection);
+            // Update ranking in database
+            updateItemRanking(data, parseInt(targetElm.id.substring(5)));
         }
-
     }
+
+    function updateItemRanking(itemId, newRanking) {
+        fetch(`${API_BASE_URL}/update.php`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: itemId, ranking: newRanking }),
+        })
+        .then(response => response.json())
+        .catch(error => console.error('Error updating ranking:', error));
+    }
+
     useEffect(() => {
         if (items == null) {
             getDataFromApi();
         }
-
-    }, [dataType]);
+    }, [dataType, tierListId]);
 
     function getDataFromApi() {
-        fetch(`item/${dataType}`)
-            .then((results) => {
-                return results.json();
-            })
+        let url = `${API_BASE_URL}/read.php?item_type=${dataType}`;
+        if (tierListId) {
+            url += `&tier_list_id=${tierListId}`;
+        }
+        fetch(url)
+            .then((results) => results.json())
             .then(data => {
-
                 setItems(data);
             })
+            .catch(error => {
+                setItems([]);
+                console.error('Error fetching items:', error);
+            });
     }
 
     useEffect(() => {
@@ -63,7 +81,6 @@ const RankItems = ({ items, setItems, dataType, imgArr, localStorageKey }) => {
             getDataFromApi();
         }
     }, [reload])
-
 
     return (
         (items != null) ?
