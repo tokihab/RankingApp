@@ -9,10 +9,10 @@ const API_BASE_URL = "/api";
 const StartRankingContainer = () => {
     const { tierListId } = useParams();
     const navigate = useNavigate();
-    const [itemType, setItemType] = useState(1);
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);               
     const [tierListName, setTierListName] = useState('');
+    const itemType = 1; // Always use type 1 for tier list items
 
     useEffect(() => {
         // Fetch tier list details and items
@@ -71,28 +71,49 @@ const StartRankingContainer = () => {
         return <div>Loading...</div>;
     }
 
+    const handleDelete = async (itemId) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/item/delete.php`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: itemId }),
+            });
+            if (response.ok) {
+                handleUploadComplete();
+            }
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
+    };
+
     return (
         <div className="ranking-container">
+            {/* Header with back button and title */}
             <div className="ranking-header">
-                <button onClick={handleBack} className="back-button">? Back to Lists</button>
+                <button onClick={handleBack} className="back-button">← Back to Lists</button>
                 <h2>{tierListName || 'Ranking'}</h2>
                 <button onClick={handleReset} className="reset-button">Reset Rankings</button>
             </div>
 
+            {/* Grid */}
+            <div className="ranking-grid-section">
+            <RankItems
+                items={items}
+                setItems={setItems}
+                dataType={itemType}
+                tierListId={tierListId}
+                localStorageKey={`tierlist-${tierListId}`}
+                onRefresh={handleUploadComplete}
+                onDeleteItem={handleDelete}
+            />
+            </div>
+
+            {/* Upload section at the bottom */}
             <div className="upload-section">
                 <ItemUpload
                     tierListId={tierListId}
                     itemType={itemType}
                     onUploadComplete={handleUploadComplete}
-                />
-            </div>
-
-            <div className="ranking-grid-section">
-                <RankItems
-                    items={items}
-                    setItems={setItems}
-                    dataType={itemType}
-                    tierListId={tierListId}
                 />
             </div>
         </div>

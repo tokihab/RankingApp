@@ -19,5 +19,13 @@ module.exports = function (app) {
         }
     });
 
+    // Proxy uploads directly to MAMP
+    const uploadsProxy = createProxyMiddleware('/api/item/uploads', {
+        target: 'http://localhost',
+        changeOrigin: true,
+        secure: false,
+    });
+
     app.use(appProxy);
+    app.use(uploadsProxy);
 };
