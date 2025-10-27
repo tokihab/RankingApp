@@ -8,12 +8,11 @@ namespace RankingApp.Controllers
     public class TierlistController : ControllerBase
     {
         private readonly HttpClient _httpClient;
-        private const string PHP_API_BASE = "http://localhost/api"; // MAMP Apache on port 80
+        private const string PHP_API_BASE = "http://localhost"; // MAMP Apache on port 80
 
         public TierlistController(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri(PHP_API_BASE);
         }
 
         [HttpGet("read.php")]
@@ -21,17 +20,24 @@ namespace RankingApp.Controllers
         {
             try
             {
-                var response = await _httpClient.GetAsync("tierlist/read.php");
+                var url = $"{PHP_API_BASE}/api/tierlist/read.php";
+                Console.WriteLine($"Attempting to call PHP API: {url}");
+                
+                var response = await _httpClient.GetAsync(url);
+                
                 if (!response.IsSuccessStatusCode)
                 {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"PHP API error response: {errorContent}");
                     return StatusCode((int)response.StatusCode, 
-                        new { success = false, message = $"PHP API returned status code {response.StatusCode}" });
+                        new { success = false, message = $"PHP API returned status code {response.StatusCode}: {errorContent}" });
                 }
                 var content = await response.Content.ReadAsStringAsync();
                 return Content(content, "application/json");
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Exception calling PHP API: {ex.Message}");
                 return StatusCode(500, new { success = false, message = ex.Message });
             }
         }
@@ -46,14 +52,17 @@ namespace RankingApp.Controllers
                     Encoding.UTF8,
                     "application/json");
 
-                var response = await _httpClient.PostAsync(
-                    "tierlist/create.php",
-                    content);
+                var url = $"{PHP_API_BASE}/api/tierlist/create.php";
+                Console.WriteLine($"Attempting to call PHP API: {url}");
+                
+                var response = await _httpClient.PostAsync(url, content);
 
                 if (!response.IsSuccessStatusCode)
                 {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"PHP API error response: {errorContent}");
                     return StatusCode((int)response.StatusCode, 
-                        new { success = false, message = $"PHP API returned status code {response.StatusCode}" });
+                        new { success = false, message = $"PHP API returned status code {response.StatusCode}: {errorContent}" });
                 }
 
                 var responseContent = await response.Content.ReadAsStringAsync();
@@ -61,6 +70,7 @@ namespace RankingApp.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Exception calling PHP API: {ex.Message}");
                 return StatusCode(500, new { success = false, message = ex.Message });
             }
         }
@@ -76,7 +86,7 @@ namespace RankingApp.Controllers
                     "application/json");
 
                 var response = await _httpClient.PostAsync(
-                    "tierlist/delete.php",
+                    $"{PHP_API_BASE}/api/tierlist/delete.php",
                     content);
 
                 if (!response.IsSuccessStatusCode)
