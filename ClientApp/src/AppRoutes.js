@@ -1,7 +1,7 @@
-import RankItemsContainer from "./components/RankItemsContainer";
-import MovieImageArr from "./components/MovieImages.js";
-import AlbumImageArr from "./components/AlbumImages.js";
 import Home from "./components/Home.js";
+import TierListManager from "./components/TierListManager";
+import StartRankingContainer from "./components/StartRankingContainer";
+import YourRanksContainer from "./components/YourRanksContainer";
 
 const AppRoutes = [
     {
@@ -9,12 +9,16 @@ const AppRoutes = [
         element: <Home />
     },
     {
-        path: '/rank-movies',
-        element: <RankItemsContainer dataType={1} imgArr={MovieImageArr} />
+        path: '/your-ranks',
+        element: <YourRanksContainer />
     },
     {
-        path: '/rank-albums',
-        element: <RankItemsContainer dataType={2} imgArr={AlbumImageArr} />
+        path: '/start-ranking/:tierListId',
+        element: <StartRankingContainer />
+    },
+    {
+        path: '/your-ranks/:tierListId',
+        element: <YourRanksContainer />
     }
 ];
 
