@@ -9,11 +9,12 @@
         if (rankNum > 0) {
             const item = Array.isArray(items) ? items.find(o => o.ranking === rankNum) : null;
             cellCollection.push(
-                <div id={`rank-${rankNum}`} onDrop={drop} onDragOver={allowDrop} className="rank-cell">
+                <div key={`rank-cell-${rankNum}`} id={`rank-${rankNum}`} onDrop={drop} onDragOver={allowDrop} className="rank-cell">
                     {item ? (
                         <img 
+                            key={`img-${item.id}-${rankNum}`}
                             id={`item-${item.id}`} 
-                            src={`http://localhost/api/uploads/${item.image_path}`}
+                                            src={`/api/item/uploads/${item.image_path.replace('uploads/', '')}`}
                             draggable="true" 
                             onDragStart={drag}
                             alt={item.title}
@@ -23,7 +24,7 @@
             );
         } else {
             cellCollection.push(
-                <div className="row-label">
+                <div key={`label-${rowLabel}`} className="row-label">
                     <h4>{rowLabel}</h4>
                 </div>
             );
@@ -67,10 +68,10 @@
     }
 
     function createRowsForGrid() {
-        rankingGrid.push(<div className="rank-row top-tier">{cellCollectionTop}</div>);
-        rankingGrid.push(<div className="rank-row middle-tier">{cellCollectionMiddle}</div>);
-        rankingGrid.push(<div className="rank-row bottom-tier">{cellCollectionBottom}</div>);
-        rankingGrid.push(<div className="rank-row worst-tier">{cellCollectionWorst}</div>);
+        rankingGrid.push(<div key="row-top" className="rank-row top-tier">{cellCollectionTop}</div>);
+        rankingGrid.push(<div key="row-middle" className="rank-row middle-tier">{cellCollectionMiddle}</div>);
+        rankingGrid.push(<div key="row-bottom" className="rank-row bottom-tier">{cellCollectionBottom}</div>);
+        rankingGrid.push(<div key="row-worst" className="rank-row worst-tier">{cellCollectionWorst}</div>);
         return rankingGrid;
     }
 

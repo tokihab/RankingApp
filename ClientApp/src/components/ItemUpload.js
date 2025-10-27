@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const API_BASE_URL = "https://localhost:44482/api";
+const API_BASE_URL = "/api";
 
 const ItemUpload = ({ tierListId, itemType, onUploadComplete }) => {
     const [title, setTitle] = useState('');

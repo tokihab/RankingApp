@@ -31,12 +31,65 @@ code {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    padding: 20px;
+    border: 2px dashed transparent;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    min-height: 120px;
+}
+
+.items-not-ranked.drag-over {
+    border-color: #0066cc;
+    background-color: rgba(0, 102, 204, 0.05);
 }
 
 .unranked-cell {
+    position: relative;
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.unranked-cell:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    border-color: #0066cc;
+}
+
+.delete-item-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(220, 53, 69, 0.9);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    opacity: 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.unranked-cell:hover .delete-item-btn {
+    opacity: 1;
+}
+
+.delete-item-btn:hover {
+    background: rgba(220, 53, 69, 1);
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4);
 }
 
 .unranked-cell img {
@@ -60,6 +113,7 @@ code {
     justify-content: space-around;
     border: 2.5px solid grey;
     background-color: rgb(35, 35, 32);
+    margin-bottom: 5px;
 }
 
 /* Changed from .row-cell to .rank-cell */
@@ -78,26 +132,28 @@ code {
     align-items: center;
     justify-content: center;
     text-align: center;
+    border-radius: 0;
+    font-weight: 600;
 }
 
 /* Updated tier selectors to target .rank-cell */
 .top-tier .row-label {
-    background-color: #FFD700;
+    background: linear-gradient(135deg, #FFD700 0%, #FFC107 100%);
     color: #000;
 }
 
 .middle-tier .row-label {
-    background-color: #87CEEB;
+    background: linear-gradient(135deg, #87CEEB 0%, #5F9EA0 100%);
     color: #000;
 }
 
 .bottom-tier .row-label {
-    background-color: #90EE90;
+    background: linear-gradient(135deg, #90EE90 0%, #7CB342 100%);
     color: #000;
 }
 
 .worst-tier .row-label {
-    background-color: #FF4500;
+    background: linear-gradient(135deg, #FF4500 0%, #D84315 100%);
     color: #000;
 }
 
