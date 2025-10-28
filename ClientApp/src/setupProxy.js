@@ -21,11 +21,17 @@ module.exports = function (app) {
 
     // Proxy uploads directly to MAMP
     const uploadsProxy = createProxyMiddleware('/api/item/uploads', {
-        target: 'http://localhost',
+        target: 'http://localhost:80', // MAMP Apache is on port 80
         changeOrigin: true,
         secure: false,
+        pathRewrite: {
+            '^/api/item/uploads': '/api/item/uploads',
+        },
+        onProxyReq: (proxyReq, req, res) => {
+            console.log('Proxying uploads request to:', proxyReq.path);
+        }
     });
 
-    app.use(appProxy);
     app.use(uploadsProxy);
+    app.use(appProxy);
 };
