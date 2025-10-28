@@ -23,7 +23,7 @@ const ItemCollection = ({ items = [], drag, imgArr = [], onDelete, allowDrop, dr
             {
                 Array.isArray(items) ? items.map((item) => (item.ranking === 0)
                     ? <Item key={`item-${item.id}`} item={item} drag={drag}
-                        itemImgObj={{ image: `/api/item/uploads/${item.image_path.replace('uploads/', '')}` }} 
+                        itemImgObj={{ image: `/api/item/uploads/${item.image_path}` }} 
                         onDelete={onDelete} />
                     : null)
                     : null
