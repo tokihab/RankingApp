@@ -1,0 +1,10 @@
+# Allow serving of images and media files
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|bmp|svg)$">
+    Header set Content-Type "image/jpeg"
+</FilesMatch>
+
+# Enable CORS
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
