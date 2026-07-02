@@ -19,7 +19,7 @@ const ItemUpload = ({ tierListId, itemType, onUploadComplete }) => {
         formData.append('ranking', 0); // Default to unranked
 
         try {
-            const response = await fetch(`${API_BASE_URL}/item/create.php`, {
+            const response = await fetch(`${API_BASE_URL}/item/create`, {
                 method: 'POST',
                 body: formData,
             });

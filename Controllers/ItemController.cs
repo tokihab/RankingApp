@@ -15,13 +15,15 @@ namespace RankingApp.Controllers
             _httpClient = httpClient;
         }
 
-        [HttpGet("read.php")]
+        // Removed .php from decorator
+        [HttpGet("read")]
         public async Task<IActionResult> Read([FromQuery] int? tier_list_id)
         {
             try
             {
                 var queryParams = tier_list_id.HasValue ? $"?tier_list_id={tier_list_id}" : "";
-                var url = $"{PHP_API_BASE}/api/item/read.php{queryParams}";
+                // Pointed to tierapp
+                var url = $"{PHP_API_BASE}/tierapp/item/read.php{queryParams}";
                 Console.WriteLine($"Attempting to call PHP API: {url}");
                 
                 var response = await _httpClient.GetAsync(url);
@@ -43,21 +45,19 @@ namespace RankingApp.Controllers
             }
         }
 
-        [HttpPost("create.php")]
+        // Removed .php from decorator
+        [HttpPost("create")]
         public async Task<IActionResult> Create()
         {
             try
             {
-                // Forward the multipart form data to PHP
                 var requestContent = new MultipartFormDataContent();
                 
-                // Forward all form data
                 foreach (var formKey in Request.Form.Keys)
                 {
                     requestContent.Add(new StringContent(Request.Form[formKey].ToString()), formKey);
                 }
                 
-                // Forward files
                 foreach (var file in Request.Form.Files)
                 {
                     var streamContent = new StreamContent(file.OpenReadStream());
@@ -65,7 +65,8 @@ namespace RankingApp.Controllers
                     requestContent.Add(streamContent, "image", file.FileName);
                 }
                 
-                var url = $"{PHP_API_BASE}/api/item/create.php";
+                // Pointed to tierapp
+                var url = $"{PHP_API_BASE}/tierapp/item/create.php";
                 Console.WriteLine($"Attempting to call PHP API: {url}");
                 
                 var response = await _httpClient.PostAsync(url, requestContent);
@@ -88,7 +89,8 @@ namespace RankingApp.Controllers
             }
         }
 
-        [HttpPost("update.php")]
+        // Removed .php from decorator
+        [HttpPost("update")]
         public async Task<IActionResult> Update([FromBody] object data)
         {
             try
@@ -98,7 +100,8 @@ namespace RankingApp.Controllers
                     Encoding.UTF8,
                     "application/json");
 
-                var url = $"{PHP_API_BASE}/api/item/update.php";
+                // Pointed to tierapp
+                var url = $"{PHP_API_BASE}/tierapp/item/update.php";
                 Console.WriteLine($"Attempting to call PHP API: {url}");
                 
                 var response = await _httpClient.PostAsync(url, content);
@@ -121,7 +124,8 @@ namespace RankingApp.Controllers
             }
         }
 
-        [HttpPost("delete.php")]
+        // Removed .php from decorator
+        [HttpPost("delete")]
         public async Task<IActionResult> Delete([FromBody] object data)
         {
             try
@@ -131,7 +135,8 @@ namespace RankingApp.Controllers
                     Encoding.UTF8,
                     "application/json");
 
-                var url = $"{PHP_API_BASE}/api/item/delete.php";
+                // Pointed to tierapp
+                var url = $"{PHP_API_BASE}/tierapp/item/delete.php";
                 Console.WriteLine($"Attempting to call PHP API: {url}");
                 
                 var response = await _httpClient.PostAsync(url, content);

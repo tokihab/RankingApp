@@ -14,7 +14,7 @@ const TierListManager = () => {
     }, []);
 
     const fetchTierLists = () => {
-        fetch(`${API_BASE_URL}/tierlist/read.php`)
+        fetch(`${API_BASE_URL}/tierlist/read`)
             .then(response => response.json())
             .then(data => setTierLists(data))
             .catch(error => console.error('Error fetching tier lists:', error));
@@ -22,7 +22,7 @@ const TierListManager = () => {
 
     const createTierList = (e) => {
         e.preventDefault();
-        fetch(`${API_BASE_URL}/tierlist/create.php`, {
+        fetch(`${API_BASE_URL}/tierlist/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -40,7 +40,8 @@ const TierListManager = () => {
     };
 
     const deleteTierList = (id) => {
-        fetch(`${API_BASE_URL}/tierlist/delete.php`, {
+
+        fetch(`${API_BASE_URL}/tierlist/delete`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
