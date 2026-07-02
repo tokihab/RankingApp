@@ -25,7 +25,8 @@ module.exports = function (app) {
         changeOrigin: true,
         secure: false,
         pathRewrite: {
-            '^/api/item/uploads': '/api/item/uploads',
+            // This is the fix: route the request to the new tierapp folder on MAMP
+            '^/api/item/uploads': '/tierapp/item/uploads', 
         },
         onProxyReq: (proxyReq, req, res) => {
             console.log('Proxying uploads request to:', proxyReq.path);

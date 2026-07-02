@@ -17,14 +17,14 @@ const YourRanksContainer = () => {
 
     const fetchTierLists = () => {
         setLoading(true);
-        fetch(`${API_BASE_URL}/tierlist/read.php`)
+        fetch(`${API_BASE_URL}/tierlist/read`)
             .then(async res => {
                 const text = await res.text();
                 try {
                     const data = JSON.parse(text);
                     setTierLists(Array.isArray(data) ? data : []);
                 } catch (e) {
-                    console.error('Invalid JSON from tierlist/read.php:', text);
+                    console.error('Invalid JSON from tierlist/read:', text);
                     setTierLists([]);
                 }
                 setLoading(false);
@@ -41,7 +41,7 @@ const YourRanksContainer = () => {
 
         setCreating(true);
         try {
-            const response = await fetch(`${API_BASE_URL}/tierlist/create.php`, {
+            const response = await fetch(`${API_BASE_URL}/tierlist/create`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: newName.trim() }),
@@ -52,7 +52,7 @@ const YourRanksContainer = () => {
             try {
                 data = JSON.parse(text);
             } catch (e) {
-                console.error('Non-JSON response from create.php:', text);
+                console.error('Non-JSON response from create:', text);
                 alert('Server error creating tier list: ' + text);
                 setCreating(false);
                 return;
@@ -79,7 +79,7 @@ const YourRanksContainer = () => {
         if (!window.confirm('Are you sure you want to delete this tier list?')) return;
         
         try {
-            const response = await fetch(`${API_BASE_URL}/tierlist/delete.php`, {
+            const response = await fetch(`${API_BASE_URL}/tierlist/delete`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id }),
@@ -87,7 +87,7 @@ const YourRanksContainer = () => {
 
             const text = await response.text();
             let data = null;
-            try { data = JSON.parse(text); } catch (e) { console.error('Non-JSON response from delete.php:', text); }
+            try { data = JSON.parse(text); } catch (e) { console.error('Non-JSON response from delete:', text); }
 
             if (data && data.success) {
                 await fetchTierLists();

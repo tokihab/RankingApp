@@ -8,7 +8,7 @@ const RankItems = ({ items, setItems, dataType, imgArr, localStorageKey, tierLis
     const [reload, setReload] = useState(false);
 
     const getDataFromApi = useCallback(() => {
-        let url = `${API_BASE_URL}/read.php`;
+        let url = `${API_BASE_URL}/read`;
         if (tierListId) {
             url += `?tier_list_id=${tierListId}`;
         } else if (dataType) {
@@ -69,7 +69,7 @@ const RankItems = ({ items, setItems, dataType, imgArr, localStorageKey, tierLis
     }
 
     function updateItemRanking(itemId, newRanking) {
-        fetch(`${API_BASE_URL}/update.php`, {
+        fetch(`${API_BASE_URL}/update`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -19,14 +19,14 @@ const StartRankingContainer = () => {
         const fetchData = async () => {
             try {
                 // Fetch tier list details
-                const listResponse = await fetch(`${API_BASE_URL}/tierlist/read.php?id=${tierListId}`);
+                const listResponse = await fetch(`${API_BASE_URL}/tierlist/read?id=${tierListId}`);
                 const listData = await listResponse.json();
                 if (listData && listData.name) {
                     setTierListName(listData.name);
                 }
 
                 // Fetch items for this tier list
-                const itemsResponse = await fetch(`${API_BASE_URL}/item/read.php?tier_list_id=${tierListId}`);
+                const itemsResponse = await fetch(`${API_BASE_URL}/item/read?tier_list_id=${tierListId}`);
                 const itemsData = await itemsResponse.json();
                 setItems(Array.isArray(itemsData) ? itemsData : []);
             } catch (error) {
@@ -41,7 +41,7 @@ const StartRankingContainer = () => {
 
     const handleUploadComplete = () => {
         // Refresh items after upload
-        fetch(`${API_BASE_URL}/item/read.php?tier_list_id=${tierListId}`)
+        fetch(`${API_BASE_URL}/item/read?tier_list_id=${tierListId}`)
             .then(res => res.json())
             .then(data => setItems(Array.isArray(data) ? data : []));
     };
@@ -50,7 +50,7 @@ const StartRankingContainer = () => {
         if (window.confirm('Are you sure you want to reset all rankings?')) {
             // Reset all items to ranking 0
             const resetPromises = items.map(item =>
-                fetch(`${API_BASE_URL}/item/update.php`, {
+                fetch(`${API_BASE_URL}/item/update`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ id: item.id, ranking: 0 }),
@@ -73,7 +73,7 @@ const StartRankingContainer = () => {
 
     const handleDelete = async (itemId) => {
         try {
-            const response = await fetch(`${API_BASE_URL}/item/delete.php`, {
+            const response = await fetch(`${API_BASE_URL}/item/delete`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: itemId }),

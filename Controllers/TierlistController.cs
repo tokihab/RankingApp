@@ -15,12 +15,13 @@ namespace RankingApp.Controllers
             _httpClient = httpClient;
         }
 
-        [HttpGet("read.php")]
+        [HttpGet("read")]
         public async Task<IActionResult> Read()
         {
             try
             {
-                var url = $"{PHP_API_BASE}/api/tierlist/read.php";
+                // Updated to point to tierapp instead of api
+                var url = $"{PHP_API_BASE}/tierapp/tierlist/read.php";
                 Console.WriteLine($"Attempting to call PHP API: {url}");
                 
                 var response = await _httpClient.GetAsync(url);
@@ -42,7 +43,7 @@ namespace RankingApp.Controllers
             }
         }
 
-        [HttpPost("create.php")]
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] object data)
         {
             try
@@ -52,7 +53,8 @@ namespace RankingApp.Controllers
                     Encoding.UTF8,
                     "application/json");
 
-                var url = $"{PHP_API_BASE}/api/tierlist/create.php";
+                // Updated to point to tierapp instead of api
+                var url = $"{PHP_API_BASE}/tierapp/tierlist/create";
                 Console.WriteLine($"Attempting to call PHP API: {url}");
                 
                 var response = await _httpClient.PostAsync(url, content);
@@ -75,7 +77,7 @@ namespace RankingApp.Controllers
             }
         }
 
-        [HttpPost("delete.php")]
+        [HttpPost("delete")]
         public async Task<IActionResult> Delete([FromBody] object data)
         {
             try
@@ -85,7 +87,8 @@ namespace RankingApp.Controllers
                     Encoding.UTF8,
                     "application/json");
 
-                var url = $"{PHP_API_BASE}/api/tierlist/delete.php";
+                // Updated to point to tierapp instead of api
+                var url = $"{PHP_API_BASE}/tierapp/tierlist/delete.php";
                 Console.WriteLine($"Attempting to call PHP API: {url}");
                 
                 var response = await _httpClient.PostAsync(url, content);
@@ -109,4 +112,3 @@ namespace RankingApp.Controllers
         }
     }
 }
-
