@@ -26,7 +26,7 @@ const StartRankingContainer = () => {
                 }
 
                 // Fetch items for this tier list
-                const itemsResponse = await fetch(`${API_BASE_URL}/item/read?tier_list_id=${tierListId}`);
+                const itemsResponse = await fetch(`${API_BASE_URL}/item/read?item_type=${itemType}&tier_list_id=${tierListId}`);
                 const itemsData = await itemsResponse.json();
                 setItems(Array.isArray(itemsData) ? itemsData : []);
             } catch (error) {
@@ -41,7 +41,7 @@ const StartRankingContainer = () => {
 
     const handleUploadComplete = () => {
         // Refresh items after upload
-        fetch(`${API_BASE_URL}/item/read?tier_list_id=${tierListId}`)
+        fetch(`${API_BASE_URL}/item/read?item_type=${itemType}&tier_list_id=${tierListId}`)
             .then(res => res.json())
             .then(data => setItems(Array.isArray(data) ? data : []));
     };
