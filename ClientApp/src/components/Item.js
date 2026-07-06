@@ -19,8 +19,8 @@
         // Strip out old or new folder prefixes so we just get 'uploads/filename.jpg'
         cleanPath = cleanPath.replace('api/item/', '').replace('tierapp/item/', '');
         
-        // Point directly to the MAMP Apache server
-        return `http://localhost:80/tierapp/item/${cleanPath}`;
+        // Route through the uploads proxy so HTTPS pages can load images safely
+        return `/api/item/uploads/${cleanPath}`;
     };
 
     // FIX: Look at the database row (item.image) first!

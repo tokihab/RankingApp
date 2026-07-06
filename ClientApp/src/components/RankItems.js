@@ -10,7 +10,7 @@ const RankItems = ({ items, setItems, dataType, imgArr, localStorageKey, tierLis
     const getDataFromApi = useCallback(() => {
         let url = `${API_BASE_URL}/read`;
         if (tierListId) {
-            url += `?tier_list_id=${tierListId}`;
+            url += `?item_type=${dataType}&tier_list_id=${tierListId}`;
         } else if (dataType) {
             url += `?item_type=${dataType}`;
         }

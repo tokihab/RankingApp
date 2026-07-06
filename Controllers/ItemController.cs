@@ -17,11 +17,21 @@ namespace RankingApp.Controllers
 
         // Removed .php from decorator
         [HttpGet("read")]
-        public async Task<IActionResult> Read([FromQuery] int? tier_list_id)
+        public async Task<IActionResult> Read([FromQuery] int? item_type, [FromQuery] int? tier_list_id)
         {
             try
             {
-                var queryParams = tier_list_id.HasValue ? $"?tier_list_id={tier_list_id}" : "";
+                var queryParts = new List<string>();
+                if (item_type.HasValue)
+                {
+                    queryParts.Add($"item_type={item_type.Value}");
+                }
+                if (tier_list_id.HasValue)
+                {
+                    queryParts.Add($"tier_list_id={tier_list_id.Value}");
+                }
+
+                var queryParams = queryParts.Count > 0 ? $"?{string.Join("&", queryParts)}" : "";
                 // Pointed to tierapp
                 var url = $"{PHP_API_BASE}/tierapp/item/read.php{queryParams}";
                 Console.WriteLine($"Attempting to call PHP API: {url}");
