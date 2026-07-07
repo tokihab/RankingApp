@@ -1,3 +1,12 @@
+---
+title: Tierlists Webapp
+emoji: 📊
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_port: 10000
+---
+
 # RankingApp
 
 RankingApp is a tier list / ranking app built to practice a deliberately unusual full stack: React on the front end, ASP.NET Core as the routing layer, PHP with PDO for database access, and MySQL running through MAMP.
