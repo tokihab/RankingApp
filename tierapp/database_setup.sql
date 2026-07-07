@@ -1,9 +1,6 @@
 -- Database setup for Ranking App Tier Lists
 -- Run this script in MySQL to create the tier_lists table
 
-CREATE DATABASE IF NOT EXISTS ranking_app;
-USE ranking_app;
-
 -- Create tier_lists table
 CREATE TABLE IF NOT EXISTS tier_lists (
     id INT AUTO_INCREMENT PRIMARY KEY,

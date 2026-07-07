@@ -8,7 +8,7 @@ namespace RankingApp.Controllers
     public class TierlistController : ControllerBase
     {
         private readonly HttpClient _httpClient;
-        private const string PHP_API_BASE = "http://localhost:80"; // MAMP Apache on port 80
+        private const string PHP_API_BASE = "http://127.0.0.1:8000";
 
         public TierlistController(HttpClient httpClient)
         {
