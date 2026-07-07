@@ -1,30 +1,27 @@
 <?php
 class Database {
-    private $host = "tokistiersql-tiersapp.i.aivencloud.com";
-    private $port = "11606";
-    private $db_name = "defaultdb";
+    // 1. Hardcode your static Aiven strings
+    private $host = "your-aiven-host.aivencloud.com";
+    private $db_name = "defaultdb"; // (or whatever your db is named)
     private $username = "avnadmin";
-    private $password = getenv('AIVEN_DB_PASS');
-    private $conn;
+    
+    // 2. Declare password, but DO NOT assign getenv() here
+    private $password; 
+    
+    public $conn;
 
     public function getConnection() {
         $this->conn = null;
+        
+        // 3. Assign the environment variable INSIDE the function
+        $this->password = getenv("AIVEN_DB_PASS"); 
 
         try {
-            // Updated DSN to include the custom port
-            $dsn = "mysql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name;
-            
-            // Aiven requires SSL. This tells PDO to allow the encrypted connection.
-            // Using 1014 directly bypasses the missing PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT constant
-            $options = array(
-                1014 => false
-            );
-            
-            // Pass the options array into the PDO constructor
-            $this->conn = new PDO($dsn, $this->username, $this->password, $options);
+            // 4. Connect using $this->password
+            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $e) {
-            echo "Connection Error: " . $e->getMessage();
+        } catch(PDOException $exception) {
+            echo "Connection error: " . $exception->getMessage();
         }
 
         return $this->conn;
