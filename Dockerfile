@@ -26,7 +26,8 @@ COPY . .
 
 RUN dotnet publish RankingApp.csproj -c Release -o /app/publish /p:UseAppHost=false
 
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-bookworm-slim AS runtime
+# ⬇️ THE FIX IS ON THIS LINE ⬇️
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 
 ENV ASPNETCORE_ENVIRONMENT=Production \
     DOTNET_PRINT_TELEMETRY_MESSAGE=false
