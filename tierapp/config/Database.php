@@ -2,12 +2,10 @@
 class Database {
     // 1. Hardcode your static Aiven strings
     private $host = "tokistiersql-tiersapp.i.aivencloud.com";
-    private $db_name = "defaultdb"; // (or whatever your db is named)
+    private $db_name = "defaultdb";
     private $username = "avnadmin";
-    
-    // 2. Declare password, but DO NOT assign getenv() here
+    private $port = "11606";
     private $password; 
-    
     public $conn;
 
     public function getConnection() {
