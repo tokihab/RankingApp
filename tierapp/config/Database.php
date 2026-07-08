@@ -1,7 +1,7 @@
 <?php
 class Database {
     // 1. Hardcode your static Aiven strings
-    private $host = "your-aiven-host.aivencloud.com";
+    private $host = "tokistiersql-tiersapp.i.aivencloud.com";
     private $db_name = "defaultdb"; // (or whatever your db is named)
     private $username = "avnadmin";
     
