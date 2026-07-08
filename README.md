@@ -77,3 +77,31 @@ This project was mainly a learning exercise for:
 - proxying between a React frontend and a separate backend stack
 
 It is a normal tier list app, except the requests take the scenic route.
+
+## Live Demo
+
+Access the live application here: [Tierlists Webapp](https://huggingface.co/spaces/T0KII/tierlists-webapp)
+
+## Deployment Architecture
+
+This project uses a custom deployment strategy to host a multi-stack application inside a single Hugging Face Docker Space. The React frontend is proxied through a .NET backend, which communicates with a local PHP development server handling the database operations. The MySQL database is hosted externally via Aiven.
+
+## Hugging Face Workarounds
+
+Deploying this specific architecture requires bypassing several strict cloud environment limitations. 
+
+Hugging Face blocks standard Git pushes containing raw binary files. All local image assets must be tracked using Git LFS (`git lfs migrate import`) before being pushed to the remote repository. 
+
+The application requires a specific YAML metadata block at the very top of this file to instruct Hugging Face to use its Docker engine and route internet traffic to port 10000. 
+
+## External Database Configuration
+
+The PHP backend connects to a managed Aiven MySQL instance. Standard connection strings will fail in this environment without two modifications.
+
+The PDO connection must explicitly declare Aiven's custom 5-digit port, as it does not use the default 3306 MySQL port. 
+
+The Aiven instance firewall must also have its Trusted Sources configured to allow inbound traffic from `0.0.0.0/0`. This ensures the database accepts requests from Hugging Face's dynamic, rotating IP addresses.
+
+## Media Handling
+
+The frontend is configured to handle both local file uploads and external Cloudinary image URLs simultaneously. The React components parse incoming image string data and conditionally append the local proxy path `/api/item/uploads/` only if the source is not already a valid external HTTP address.
