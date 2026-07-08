@@ -14,7 +14,7 @@
                         <img 
                             key={`img-${item.id}-${rankNum}`}
                             id={`item-${item.id}`} 
-                            src={`/api/item/uploads/${item.image_path}`}
+                            src={item.image_path && item.image_path.startsWith('http') ? item.image_path : `/api/item/uploads/${item.image_path}`}
                             draggable="true" 
                             onDragStart={drag}
                             alt={item.title}
