@@ -54,7 +54,7 @@ namespace RankingApp.Controllers
                     "application/json");
 
                 // Updated to point to tierapp instead of api
-                var url = $"{PHP_API_BASE}/tierapp/tierlist/create";
+                var url = $"{PHP_API_BASE}/tierapp/tierlist/create.php";
                 Console.WriteLine($"Attempting to call PHP API: {url}");
                 
                 var response = await _httpClient.PostAsync(url, content);
